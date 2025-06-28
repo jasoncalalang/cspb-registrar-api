@@ -34,6 +34,12 @@ See `docs/swagger.yaml` for detailed request and response structures.
     spring.datasource.url=jdbc:postgresql://localhost:5432/registrar
     spring.datasource.username=postgres
     spring.datasource.password=secret
+    spring.application.name=registrar
+    spring.jpa.open-in-view=false
+    spring.flyway.clean-disabled=false
+    spring.flyway.baseline-on-migrate=true
+    spring.flyway.baseline-version=1
+    spring.flyway.baseline-description=Initial
     ```
 
     Flyway will automatically apply the migrations from `sql/` on startup.
