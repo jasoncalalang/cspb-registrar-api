@@ -1,0 +1,69 @@
+openapi: 3.0.1
+info:
+  title: Registrar API
+  version: 1.0.0
+paths:
+  /api/students:
+    get:
+      summary: List students
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create a student
+      responses:
+        '200':
+          description: Created
+  /api/students/{id}:
+    get:
+      summary: Get student by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not found
+    put:
+      summary: Replace student
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Updated
+        '404':
+          description: Not found
+    patch:
+      summary: Patch student
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Patched
+        '404':
+          description: Not found
+    delete:
+      summary: Delete student
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: Not found
