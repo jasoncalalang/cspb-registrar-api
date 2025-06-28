@@ -56,3 +56,14 @@ The tests use Mockito to mock the data layer so Docker is not required.
 
 Test reports can be found under `build/reports/tests/test` after execution.
 
+
+## Docker Image
+
+This project provides a multi-stage Dockerfile. Build the image and push it under `jasoncalalang/cspb-api:1.0` using:
+
+```bash
+docker build -t jasoncalalang/cspb-api:1.0 .
+docker push jasoncalalang/cspb-api:1.0
+```
+
+The build stage uses `gradle:8.14.2-jdk21-alpine` while the runtime stage uses `openjdk:21-jdk-alpine3.21`.
