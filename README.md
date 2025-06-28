@@ -45,6 +45,8 @@ See `docs/swagger.yaml` for detailed request and response structures.
     ```
 
     The API will be available at `http://localhost:8080`.
+    Visiting the root path (`/`) displays a simple landing page with a link to
+    the Swagger UI (`/swagger-ui.html`).
 
 ## Running Tests
 
