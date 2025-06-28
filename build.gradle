@@ -1,7 +1,7 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.5.3'
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.springframework.boot' version '3.3.0'      // or the exact version you generated
+    id 'io.spring.dependency-management' version '1.1.5'
+    id 'java'
 }
 
 group = 'ph.edu.cspb.registrar'
@@ -37,15 +37,15 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
 	implementation 'org.flywaydb:flyway-database-postgresql'
     compileOnly 'org.projectlombok:lombok:1.18.32'
-    compileOnly 'org.mapstruct:mapstruct:1.6.3.Final'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3.Final'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.testcontainers:postgresql'
     testImplementation 'org.testcontainers:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.mapstruct:mapstruct:1.6.3'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 }
 
 tasks.named("test") {
