@@ -7,6 +7,7 @@ import ph.edu.cspb.registrar.repo.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,9 +49,10 @@ public class StudentController {
     @GetMapping("/students")
     public Page<StudentDto> listStudents(@RequestParam(required = false) String lastName,
                                          Pageable pageable) {
+        Pageable noSort = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
         Page<Student> page = (lastName == null)
-                ? studentRepository.findAll(pageable)
-                : studentRepository.findByLastNameContainingIgnoreCase(lastName, pageable);
+                ? studentRepository.findAll(noSort)
+                : studentRepository.findByLastNameContainingIgnoreCase(lastName, noSort);
         return page.map(studentMapper::toDto);
     }
 
