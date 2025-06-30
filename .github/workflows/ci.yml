@@ -45,9 +45,10 @@ jobs:
       - name: Login to IBM Cloud
         uses: IBM/actions-ibmcloud-cli@v1
         with:
-          api_key: ${{ secrets.IBMCLOUD_API_KEY }}
-          region: jp-tok
-          group: default
+          plugins: container-service
+
+      - name: IBM Cloud Login
+        run: ic login -u ${{ secrets.IBM_CLOUD_API_KEY }} -g default -r jp-tok
 
       - name: Configure cluster
         run: ic ks cluster config -c d1e1256t0a9klfmaes1g
