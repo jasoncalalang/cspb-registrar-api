@@ -36,10 +36,11 @@ spec:
             - name: pgsql-root
               mountPath: /app/root.pem
               subPath: root.pem
+              readOnly: true
       volumes:
         - name: pgsql-root
           secret:
             secretName: pgsql-root
             items:
-              - key: root.pem
+              - key: cert.crt
                 path: root.pem
