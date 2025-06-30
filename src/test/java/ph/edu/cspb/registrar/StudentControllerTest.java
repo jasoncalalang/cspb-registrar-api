@@ -12,6 +12,9 @@ import ph.edu.cspb.registrar.model.Student;
 import ph.edu.cspb.registrar.repo.*;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -62,10 +65,11 @@ class StudentControllerTest {
                 LocalDate.of(2000,1,1), null, null, "Filipino", null,
                 (short)0, null, null, null, null);
 
-        ResponseEntity<StudentDto> response = controller.createStudent(dto);
+        ResponseEntity<List<StudentDto>> response = controller.createStudents(List.of(dto));
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody().id()).isEqualTo(1L);
+        assertThat(response.getBody()).hasSize(1);
+        assertThat(response.getBody().get(0).id()).isEqualTo(1L);
         verify(studentRepository).save(any(Student.class));
     }
 
@@ -87,5 +91,25 @@ class StudentControllerTest {
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         verify(studentRepository, never()).deleteById(anyLong());
+    }
+
+    @Test
+    void updateStudentSetsUpdatedAt() {
+        Student existing = new Student();
+        existing.setId(1L);
+        existing.setCreatedAt(OffsetDateTime.parse("2024-01-01T00:00Z"));
+        when(studentRepository.findById(1L)).thenReturn(Optional.of(existing));
+        when(studentRepository.save(any(Student.class))).thenAnswer(inv -> inv.getArgument(0));
+
+        StudentDto dto = new StudentDto(null, "123456789012", "Doe", "John", null, null,
+                LocalDate.of(2000,1,1), null, null, "Filipino", null,
+                (short)0, null, null, null, null);
+
+        ResponseEntity<StudentDto> response = controller.updateStudent(1L, dto);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody().createdAt()).isEqualTo(existing.getCreatedAt());
+        assertThat(response.getBody().updatedAt()).isNotNull();
+        verify(studentRepository).save(any(Student.class));
     }
 }

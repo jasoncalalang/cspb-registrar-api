@@ -31,4 +31,9 @@ public class Address {
 
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = OffsetDateTime.now();
+    }
 }

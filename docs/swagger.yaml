@@ -22,20 +22,25 @@ paths:
                 items:
                   $ref: '#/components/schemas/Student'
     post:
-      summary: Create a student
+      summary: Create students
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Student'
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/Student'
       responses:
         '200':
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Student'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
   /api/students/{id}:
     get:
       summary: Get student by id
