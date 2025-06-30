@@ -55,9 +55,9 @@ jobs:
 
       - name: Deploy to Kubernetes
         env:
-          INGRESS_HOST: ${{ secrets.INGRESS_HOST }}
-          TLS_HOST: ${{ secrets.TLS_HOST }}
-          TLS_SECRET: ${{ secrets.TLS_SECRET }}
+          INGRESS_HOST: ${{ vars.INGRESS_HOST }}
+          TLS_HOST: ${{ vars.TLS_HOST }}
+          TLS_SECRET: ${{ vars.TLS_SECRET }}
           DATASOURCE_URL: ${{ vars.DATASOURCE_URL }}
           DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
           DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
