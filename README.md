@@ -23,6 +23,7 @@ This project is a Spring Boot application providing a simple registrar API. The 
 | GET    | `/api/students/{id}/requirements`     | Get requirements for a student |
 | PUT    | `/api/students/{id}/requirements/{typeId}` | Set/update a requirement |
 | PATCH  | `/api/students/{id}/requirements`     | Batch update requirements |
+| GET    | `/health` or `/api/health`            | Health check              |
 
 See `docs/swagger.yaml` for detailed request and response structures.
 

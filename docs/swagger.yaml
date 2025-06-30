@@ -256,6 +256,26 @@ paths:
           description: No content
         '404':
           description: Not found
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+  /api/health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
 components:
   schemas:
     Student:
@@ -350,4 +370,9 @@ components:
         name:
           type: string
           description: Requirement name
+    Health:
+      type: object
+      properties:
+        message:
+          type: string
 
