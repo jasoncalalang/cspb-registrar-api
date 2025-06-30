@@ -16,8 +16,3 @@ ingress:
     hosts:
       - example.com
     secretName: tls-secret
-spring:
-  datasource:
-    url: ""
-    username: ""
-    password: ""
