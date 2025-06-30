@@ -38,3 +38,23 @@ jobs:
           context: .
           push: true
           tags: jasoncalalang/cspb-registrar-api:1.0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+
+      - name: Deploy to Kubernetes
+        env:
+          INGRESS_HOST: ${{ secrets.INGRESS_HOST }}
+          TLS_HOST: ${{ secrets.TLS_HOST }}
+          TLS_SECRET: ${{ secrets.TLS_SECRET }}
+          DATASOURCE_URL: ${{ vars.DATASOURCE_URL }}
+          DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
+          DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
+        run: |
+          helm upgrade --install registrar ./kube \
+            --set ingress.host=$INGRESS_HOST \
+            --set ingress.tls.hosts[0]=$TLS_HOST \
+            --set ingress.tls.secretName=$TLS_SECRET \
+            --set spring.datasource.url=$DATASOURCE_URL \
+            --set spring.datasource.username=$DATASOURCE_USERNAME \
+            --set spring.datasource.password=$DATASOURCE_PASSWORD
