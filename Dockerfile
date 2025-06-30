@@ -5,7 +5,7 @@ COPY . .
 RUN gradle clean build -x test
 
 # Runtime stage
-FROM openjdk:21-jdk-alpine3.21
+FROM docker.io/library/eclipse-temurin:21-jdk-alpine-3.21
 WORKDIR /app
 COPY --from=builder /workspace/app/build/libs/*.jar app.jar
 EXPOSE 8080
