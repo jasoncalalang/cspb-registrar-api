@@ -48,10 +48,10 @@ jobs:
           plugins: container-service
 
       - name: IBM Cloud Login
-        run: ic login -u ${{ secrets.IBM_CLOUD_API_KEY }} -g default -r jp-tok
+        run: ibmcloud login -u ${{ secrets.IBM_CLOUD_API_KEY }} -g default -r jp-tok
 
       - name: Configure cluster
-        run: ic ks cluster config -c d1e1256t0a9klfmaes1g
+        run: ibmcloud ks cluster config -c d1e1256t0a9klfmaes1g
 
       - name: Deploy to Kubernetes
         env:
