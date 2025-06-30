@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "registrar-api.fullname" . }}
+  labels:
+    app: {{ include "registrar-api.name" . }}
+    chart: {{ include "registrar-api.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "registrar-api.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "registrar-api.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ include "registrar-api.name" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: {{ .Values.spring.datasource.url | quote }}
+            - name: SPRING_DATASOURCE_USERNAME
+              value: {{ .Values.spring.datasource.username | quote }}
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: {{ .Values.spring.datasource.password | quote }}
+          volumeMounts:
+            - name: pgsql-root
+              mountPath: /app/root.pem
+              subPath: root.pem
+      volumes:
+        - name: pgsql-root
+          secret:
+            secretName: pgsql-root
+            items:
+              - key: root.pem
+                path: root.pem
