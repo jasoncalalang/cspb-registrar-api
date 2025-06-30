@@ -85,4 +85,6 @@ Hub. Add the following secrets to your repository under **Settings → Secrets a
 variables → Actions**:
 
 - `DOCKER_USERNAME` – your Docker Hub username
-- `DOCKER_PASSWORD` – a Docker Hub access token or password
+- `DOCKERHUB_TOKEN` – a Docker Hub access token
+
+The workflow logs in using `docker/login-action@v3` and these two secrets.
