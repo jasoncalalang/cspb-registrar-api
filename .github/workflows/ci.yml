@@ -68,4 +68,5 @@ jobs:
             --set ingress.tls.secretName=$TLS_SECRET \
             --set spring.datasource.url=$DATASOURCE_URL \
             --set spring.datasource.username=$DATASOURCE_USERNAME \
-            --set spring.datasource.password=$DATASOURCE_PASSWORD
+            --set spring.datasource.password=$DATASOURCE_PASSWORD \
+            -n ${{ vars.HELM_NAMESPACE }}
