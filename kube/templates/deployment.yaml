@@ -27,11 +27,20 @@ spec:
             - containerPort: {{ .Values.service.targetPort }}
           env:
             - name: SPRING_DATASOURCE_URL
-              value: {{ .Values.spring.datasource.url | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: spring-db-secret
+                  key: SPRING_DATASOURCE_URL
             - name: SPRING_DATASOURCE_USERNAME
-              value: {{ .Values.spring.datasource.username | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: spring-db-secret
+                  key: SPRING_DATASOURCE_USERNAME
             - name: SPRING_DATASOURCE_PASSWORD
-              value: {{ .Values.spring.datasource.password | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: spring-db-secret
+                  key: SPRING_DATASOURCE_PASSWORD
           volumeMounts:
             - name: pgsql-root
               mountPath: /app/root.pem

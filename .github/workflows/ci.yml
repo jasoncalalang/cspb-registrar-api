@@ -58,15 +58,9 @@ jobs:
           INGRESS_HOST: ${{ vars.INGRESS_HOST }}
           TLS_HOST: ${{ vars.TLS_HOST }}
           TLS_SECRET: ${{ vars.TLS_SECRET }}
-          DATASOURCE_URL: ${{ vars.DATASOURCE_URL }}
-          DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
-          DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
         run: |
           helm upgrade --install registrar ./kube \
             --set ingress.host=$INGRESS_HOST \
             --set ingress.tls.hosts[0]=$TLS_HOST \
             --set ingress.tls.secretName=$TLS_SECRET \
-            --set spring.datasource.url=$DATASOURCE_URL \
-            --set spring.datasource.username=$DATASOURCE_USERNAME \
-            --set spring.datasource.password=$DATASOURCE_PASSWORD \
             -n ${{ vars.HELM_NAMESPACE }}
