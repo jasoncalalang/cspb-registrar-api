@@ -11,7 +11,7 @@ This project is a Spring Boot application providing a simple registrar API. The 
 | Method | Path                                   | Description               |
 |-------|----------------------------------------|---------------------------|
 | GET    | `/api/students`                       | List students (optionally filter by last name) |
-| POST   | `/api/students`                       | Create a student          |
+| POST   | `/api/students`                       | Create students           |
 | GET    | `/api/students/{id}`                  | Get a student by id       |
 | PUT    | `/api/students/{id}`                  | Replace a student record  |
 | PATCH  | `/api/students/{id}`                  | Partially update a student |

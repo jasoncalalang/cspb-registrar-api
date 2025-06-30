@@ -5,6 +5,7 @@ import ph.edu.cspb.registrar.mapper.*;
 import ph.edu.cspb.registrar.model.*;
 import ph.edu.cspb.registrar.repo.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.time.OffsetDateTime;
 
 @RestController
 @RequestMapping("/api")
@@ -65,9 +67,14 @@ public class StudentController {
     }
 
     @PostMapping("/students")
-    public ResponseEntity<StudentDto> createStudent(@Valid @RequestBody StudentDto dto) {
-        Student saved = studentRepository.save(studentMapper.toEntity(dto));
-        return ResponseEntity.ok(studentMapper.toDto(saved));
+    public ResponseEntity<List<StudentDto>> createStudents(
+            @Valid @RequestBody @Size(min = 1) List<StudentDto> dtos) {
+        List<StudentDto> saved = dtos.stream()
+                .map(studentMapper::toEntity)
+                .map(studentRepository::save)
+                .map(studentMapper::toDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(saved);
     }
 
     @PutMapping("/students/{id}")
@@ -76,6 +83,8 @@ public class StudentController {
         return studentRepository.findById(id)
                 .map(existing -> {
                     Student entity = studentMapper.toEntity(dto);
+                    entity.setCreatedAt(existing.getCreatedAt());
+                    entity.setUpdatedAt(OffsetDateTime.now());
                     entity.setId(id);
                     entity.setAddress(existing.getAddress());
                     entity.setRequirements(existing.getRequirements());
