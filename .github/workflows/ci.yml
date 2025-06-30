@@ -48,7 +48,7 @@ jobs:
           plugins: container-service
 
       - name: IBM Cloud Login
-        run: ibmcloud login --apikey ${{ secrets.IBMCLOUD_API_KEY }} -g default -r jp-tok
+        run: ibmcloud login --apikey ${{ secrets.IBMCLOUD_API_KEY }} -r jp-tok
 
       - name: Configure cluster
         run: ibmcloud ks cluster config -c d1e1256t0a9klfmaes1g
