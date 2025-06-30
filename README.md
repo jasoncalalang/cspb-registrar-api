@@ -75,4 +75,14 @@ docker build -t jasoncalalang/cspb-api:1.0 .
 docker push jasoncalalang/cspb-api:1.0
 ```
 
-The build stage uses `gradle:8.14.2-jdk21-alpine` while the runtime stage uses `openjdk:21-jdk-alpine3.21`.
+The build stage uses `gradle:8.14.2-jdk21-alpine` while the runtime stage uses
+`docker.io/library/eclipse-temurin:21-jdk-alpine-3.21`.
+
+### GitHub Actions secrets
+
+The workflow under `.github/workflows/ci.yml` pushes the Docker image to Docker
+Hub. Add the following secrets to your repository under **Settings → Secrets and
+variables → Actions**:
+
+- `DOCKER_USERNAME` – your Docker Hub username
+- `DOCKER_PASSWORD` – a Docker Hub access token or password
