@@ -1,3 +1,5 @@
+[![CI](https://github.com/jasoncalalang/cspb-registrar-api/actions/workflows/ci.yml/badge.svg)](https://github.com/jasoncalalang/cspb-registrar-api/actions/workflows/ci.yml)
+
 # Registrar API
 
 This project is a Spring Boot application providing a simple registrar API. The OpenAPI definition is in `docs/swagger.yaml` and the database schema is created using Flyway migrations under the `sql` directory.
