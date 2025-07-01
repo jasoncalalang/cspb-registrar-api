@@ -290,67 +290,86 @@ components:
           type: integer
           format: int64
           description: Unique student identifier
+          example: 1
         lrn:
           type: string
           description: Learner reference number
+          example: "123456789012"
         lastName:
           type: string
           description: Last name
+          example: Doe
         firstName:
           type: string
           description: First name
+          example: John
         middleName:
           type: string
           description: Middle name
+          example: Q
         extensionName:
           type: string
           description: Name extension
+          example: Jr
         birthDate:
           type: string
           format: date
           description: Date of birth
+          example: "2000-01-01"
         birthPlace:
           type: string
           description: Place of birth
+          example: Manila
         gender:
           type: string
           description: Gender
+          example: M
         nationality:
           type: string
           description: Nationality
+          example: Filipino
         religion:
           type: string
           description: Religion
+          example: Catholic
         numSiblings:
           type: integer
           format: int32
           description: Number of siblings
+          example: 2
         siblingNames:
           type: string
           description: Names of siblings
+          example: "Jane Doe, Jim Doe"
         imgPath:
           type: string
           description: Image path
+          example: "/images/students/1.jpg"
         createdAt:
           type: string
           format: date-time
           description: Time record was created
+          example: "2024-01-01T12:00:00Z"
         updatedAt:
           type: string
           format: date-time
           description: Time record was last updated
+          example: "2024-01-02T12:00:00Z"
     Address:
       type: object
       properties:
         houseNo:
           type: string
           description: House number
+          example: "123"
         streetSubd:
           type: string
           description: Street or subdivision
+          example: "Main St"
         bgyCode:
           type: string
           description: Barangay code
+          example: B001
     Requirement:
       type: object
       properties:
@@ -358,13 +377,16 @@ components:
           type: integer
           format: int32
           description: Requirement type identifier
+          example: 1
         submitted:
           type: boolean
           description: Whether the requirement was submitted
+          example: true
         submittedDate:
           type: string
           format: date
           description: Date of submission
+          example: "2024-01-05"
     RequirementType:
       type: object
       properties:
@@ -372,12 +394,15 @@ components:
           type: integer
           format: int32
           description: Requirement type identifier
+          example: 1
         name:
           type: string
           description: Requirement name
+          example: "Birth Certificate"
     Health:
       type: object
       properties:
         message:
           type: string
+          example: OK
 
