@@ -39,6 +39,7 @@ See `docs/swagger.yaml` for detailed request and response structures.
     spring.datasource.password=secret
     spring.application.name=registrar
     spring.jpa.open-in-view=false
+    spring.datasource.hikari.max-lifetime=300000
     spring.flyway.clean-disabled=false
     spring.flyway.baseline-on-migrate=true
     spring.flyway.baseline-version=1
