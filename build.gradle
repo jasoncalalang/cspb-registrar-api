@@ -41,6 +41,7 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.6.3'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+    implementation 'io.zonky.test:embedded-postgres:2.0.4'
 }
 
 test {
@@ -52,4 +53,10 @@ test {
 
 tasks.named("test") {
     useJUnitPlatform()
+}
+
+tasks.register('bootRunDev', org.springframework.boot.gradle.tasks.run.BootRun) {
+    group = 'application'
+    description = 'Runs the application with an embedded PostgreSQL database.'
+    systemProperty 'spring.profiles.active', 'dev'
 }
