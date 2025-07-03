@@ -5,7 +5,7 @@ import ph.edu.cspb.registrar.model.Student;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = ParentGuardianMapper.class)
 public interface StudentMapper {
     StudentDto toDto(Student student);
 

@@ -388,6 +388,11 @@ components:
           type: string
           description: Image path
           example: "/images/students/1.jpg"
+        parents:
+          type: array
+          description: Parent or guardian details
+          items:
+            $ref: '#/components/schemas/ParentGuardian'
         createdAt:
           type: string
           format: date-time

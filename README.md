@@ -2,7 +2,7 @@
 
 # Registrar API
 
-This project is a Spring Boot application providing a simple registrar API. The OpenAPI definition is in `docs/swagger.yaml` and the database schema is created using Flyway migrations under the `sql` directory.
+This project is a Spring Boot application providing a simple registrar API. The OpenAPI definition is in `docs/swagger.yaml` and the database schema is created using Flyway migrations under the `sql` directory. Student records now include parent or guardian information which can be managed via dedicated endpoints.
 
 ## Prerequisites
 
@@ -25,6 +25,8 @@ This project is a Spring Boot application providing a simple registrar API. The 
 | GET    | `/api/students/{id}/requirements`     | Get requirements for a student |
 | PUT    | `/api/students/{id}/requirements/{typeId}` | Set/update a requirement |
 | PATCH  | `/api/students/{id}/requirements`     | Batch update requirements |
+| GET    | `/api/students/{id}/parents`          | List parents or guardians |
+| PATCH  | `/api/students/{id}/parents`          | Batch update parents or guardians |
 | GET    | `/health` or `/api/health`            | Health check              |
 
 See `docs/swagger.yaml` for detailed request and response structures.

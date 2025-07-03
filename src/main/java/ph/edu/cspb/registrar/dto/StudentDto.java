@@ -2,6 +2,7 @@ package ph.edu.cspb.registrar.dto;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 public record StudentDto(
         Long id,
@@ -18,6 +19,7 @@ public record StudentDto(
         Short numSiblings,
         String siblingNames,
         String imgPath,
+        java.util.List<ParentGuardianDto> parents,
         OffsetDateTime createdAt,
         OffsetDateTime updatedAt
 ) {

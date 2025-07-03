@@ -69,7 +69,7 @@ class StudentControllerTest {
 
         StudentDto dto = new StudentDto(null, "123456789012", "Doe", "John", null, null,
                 LocalDate.of(2000,1,1), null, null, "Filipino", null,
-                (short)0, null, null, null, null);
+                (short)0, null, null, null, null, null);
 
         ResponseEntity<List<StudentDto>> response = controller.createStudents(List.of(dto));
 
@@ -109,7 +109,7 @@ class StudentControllerTest {
 
         StudentDto dto = new StudentDto(null, "123456789012", "Doe", "John", null, null,
                 LocalDate.of(2000,1,1), null, null, "Filipino", null,
-                (short)0, null, null, null, null);
+                (short)0, null, null, null, null, null);
 
         ResponseEntity<StudentDto> response = controller.updateStudent(1L, dto);
 
