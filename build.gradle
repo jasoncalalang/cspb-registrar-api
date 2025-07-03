@@ -59,5 +59,8 @@ tasks.named("test") {
 tasks.register('bootRunDev', org.springframework.boot.gradle.tasks.run.BootRun) {
     group = 'application'
     description = 'Runs the application with an embedded PostgreSQL database.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'ph.edu.cspb.registrar.RegistrarApplication'
     systemProperty 'spring.profiles.active', 'dev'
 }
+
