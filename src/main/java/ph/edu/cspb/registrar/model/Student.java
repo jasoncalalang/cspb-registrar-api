@@ -11,6 +11,7 @@ import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -69,6 +70,9 @@ public class Student {
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Requirement> requirements = new HashSet<>();
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ParentGuardian> parents = new HashSet<>();
 
     @PrePersist
     public void prePersist() {

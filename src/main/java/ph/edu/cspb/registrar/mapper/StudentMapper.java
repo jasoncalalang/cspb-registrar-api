@@ -11,6 +11,7 @@ public interface StudentMapper {
 
     @Mapping(target = "address", ignore = true)
     @Mapping(target = "requirements", ignore = true)
+    @Mapping(target = "parents", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     Student toEntity(StudentDto dto);
