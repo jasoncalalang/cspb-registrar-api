@@ -17,12 +17,12 @@ CREATE EXTENSION IF NOT EXISTS pg_trgm;
 -------------------------------------------------------------------------------
 -- 1.  Simple look-ups
 -------------------------------------------------------------------------------
-CREATE TABLE requirement_types (
+CREATE TABLE school.requirement_types (
     id   SMALLSERIAL PRIMARY KEY,
     name TEXT NOT NULL UNIQUE
 );
 
-INSERT INTO requirement_types (name) VALUES
+INSERT INTO school.requirement_types (name) VALUES
   ('Form 137'),
   ('Report Card'),
   ('PSA'),
@@ -34,12 +34,12 @@ INSERT INTO requirement_types (name) VALUES
 -- 2.  Philippine geographic reference (PSGC codes)
 --     Load data later via ETL or COPY FROM PROGRAM.
 -------------------------------------------------------------------------------
-CREATE TABLE provinces (
+CREATE TABLE school.provinces (
     province_code TEXT PRIMARY KEY,
     name          TEXT NOT NULL
 );
 
-CREATE TABLE cities (
+CREATE TABLE school.cities (
     city_code     TEXT PRIMARY KEY,
     province_code TEXT NOT NULL REFERENCES provinces
                   ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -47,7 +47,7 @@ CREATE TABLE cities (
     UNIQUE (province_code, name)
 );
 
-CREATE TABLE barangays (
+CREATE TABLE school.barangays (
     bgy_code      TEXT PRIMARY KEY,
     city_code     TEXT NOT NULL REFERENCES cities
                   ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -58,7 +58,7 @@ CREATE TABLE barangays (
 -------------------------------------------------------------------------------
 -- 3.  Core STUDENT table
 -------------------------------------------------------------------------------
-CREATE TABLE students (
+CREATE TABLE school.students (
     id               BIGSERIAL PRIMARY KEY,
     lrn              TEXT UNIQUE
                        CHECK (lrn ~ '^[0-9]{12}$'),      -- 12-digit DepEd LRN
@@ -79,43 +79,43 @@ CREATE TABLE students (
 );
 
 --  Fast searches & fuzzy matches
-CREATE INDEX idx_students_last_name_btree  ON students (last_name);
-CREATE INDEX idx_students_last_name_trgm   ON students USING GIN (last_name gin_trgm_ops);
+CREATE INDEX idx_students_last_name_btree  ON school.students (last_name);
+CREATE INDEX idx_students_last_name_trgm   ON school.students USING GIN (last_name gin_trgm_ops);
 
 --  Auto-maintain updated_at
-CREATE OR REPLACE FUNCTION trg_set_updated_at()
+CREATE OR REPLACE FUNCTION school.trg_set_updated_at()
 RETURNS TRIGGER LANGUAGE plpgsql AS $$
 BEGIN
   NEW.updated_at := NOW();
   RETURN NEW;
 END $$;
 CREATE TRIGGER set_updated_at
-BEFORE UPDATE ON students
-FOR EACH ROW EXECUTE FUNCTION trg_set_updated_at();
+BEFORE UPDATE ON school.students
+FOR EACH ROW EXECUTE FUNCTION school.trg_set_updated_at();
 
 -------------------------------------------------------------------------------
 -- 4.  One current address per student (authoritative barangay FK only)
 -------------------------------------------------------------------------------
-CREATE TABLE addresses (
-    student_id  BIGINT PRIMARY KEY REFERENCES students
+CREATE TABLE school.addresses (
+    student_id  BIGINT PRIMARY KEY REFERENCES school.students
                 ON UPDATE CASCADE ON DELETE CASCADE,
     house_no    TEXT,
     street_subd TEXT,
-    bgy_code    TEXT NOT NULL REFERENCES barangays
+    bgy_code    TEXT NOT NULL REFERENCES school.barangays
                 ON UPDATE CASCADE ON DELETE RESTRICT,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 --  Geo look-ups: who lives in this barangay?
-CREATE INDEX idx_addresses_bgy ON addresses (bgy_code);
+CREATE INDEX idx_addresses_bgy ON school.addresses (bgy_code);
 
 -------------------------------------------------------------------------------
 -- 5.  Admission requirements fulfilled (M:N bridge)
 -------------------------------------------------------------------------------
-CREATE TABLE requirements (
-    student_id        BIGINT     NOT NULL REFERENCES students
+CREATE TABLE school.requirements (
+    student_id        BIGINT     NOT NULL REFERENCES school.students
                       ON UPDATE CASCADE ON DELETE CASCADE,
-    requirement_type  SMALLINT   NOT NULL REFERENCES requirement_types
+    requirement_type  SMALLINT   NOT NULL REFERENCES school.requirement_types
                       ON UPDATE CASCADE ON DELETE RESTRICT,
     submitted         BOOLEAN    NOT NULL DEFAULT FALSE,
     submitted_date    DATE,
@@ -125,5 +125,5 @@ CREATE TABLE requirements (
 
 --  Quick “who still owes X?” list
 CREATE INDEX idx_requirements_missing
-  ON requirements (requirement_type)
+  ON school.requirements (requirement_type)
   WHERE submitted = FALSE;

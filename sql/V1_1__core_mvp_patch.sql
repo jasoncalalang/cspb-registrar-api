@@ -4,7 +4,7 @@
 SET search_path TO school, ibm_extension, public;
 
 -- 1 ▶ replace permissive CHECK on 'requirements'
-ALTER TABLE requirements
+ALTER TABLE school.requirements
   DROP CONSTRAINT IF EXISTS requirements_submitted_check,
   ADD  CONSTRAINT requirements_submitted_chk
        CHECK (
