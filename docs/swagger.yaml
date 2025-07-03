@@ -234,6 +234,49 @@ paths:
           description: No content
         '404':
           description: Not found
+  /api/students/{id}/parents:
+    get:
+      summary: Get parents or guardians for a student
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ParentGuardian'
+        '404':
+          description: Not found
+    patch:
+      summary: Batch update parents or guardians
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ParentGuardian'
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: Not found
   /api/students/{id}/requirements/{typeId}:
     put:
       summary: Set/update a requirement
@@ -399,6 +442,41 @@ components:
           type: string
           description: Requirement name
           example: "Birth Certificate"
+    ParentGuardian:
+      type: object
+      properties:
+        role:
+          type: string
+          description: Relationship to the student
+          example: father
+        firstName:
+          type: string
+          description: First name
+          example: John
+        lastName:
+          type: string
+          description: Last name
+          example: Doe
+        middleName:
+          type: string
+          description: Middle name
+          example: Q
+        occupation:
+          type: string
+          description: Occupation
+          example: Engineer
+        contactNum:
+          type: string
+          description: Contact number
+          example: '09171234567'
+        email:
+          type: string
+          description: Email address
+          example: father@example.com
+        highestEducationalAttainment:
+          type: string
+          description: Highest educational attainment
+          example: College
     Health:
       type: object
       properties:

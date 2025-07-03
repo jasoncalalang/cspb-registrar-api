@@ -25,27 +25,33 @@ public class StudentController {
     private final AddressRepository addressRepository;
     private final RequirementTypeRepository requirementTypeRepository;
     private final RequirementRepository requirementRepository;
+    private final ParentGuardianRepository parentGuardianRepository;
     private final StudentMapper studentMapper;
     private final AddressMapper addressMapper;
     private final RequirementTypeMapper requirementTypeMapper;
     private final RequirementMapper requirementMapper;
+    private final ParentGuardianMapper parentGuardianMapper;
 
     public StudentController(StudentRepository studentRepository,
                              AddressRepository addressRepository,
                              RequirementTypeRepository requirementTypeRepository,
                              RequirementRepository requirementRepository,
+                             ParentGuardianRepository parentGuardianRepository,
                              StudentMapper studentMapper,
                              AddressMapper addressMapper,
                              RequirementTypeMapper requirementTypeMapper,
-                             RequirementMapper requirementMapper) {
+                             RequirementMapper requirementMapper,
+                             ParentGuardianMapper parentGuardianMapper) {
         this.studentRepository = studentRepository;
         this.addressRepository = addressRepository;
         this.requirementTypeRepository = requirementTypeRepository;
         this.requirementRepository = requirementRepository;
+        this.parentGuardianRepository = parentGuardianRepository;
         this.studentMapper = studentMapper;
         this.addressMapper = addressMapper;
         this.requirementTypeMapper = requirementTypeMapper;
         this.requirementMapper = requirementMapper;
+        this.parentGuardianMapper = parentGuardianMapper;
     }
 
     @GetMapping("/students")
@@ -216,6 +222,42 @@ public class StudentController {
             req.setSubmitted(dto.submitted());
             req.setSubmittedDate(dto.submittedDate());
             requirementRepository.save(req);
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/students/{id}/parents")
+    public ResponseEntity<List<ParentGuardianDto>> getParents(@PathVariable Long id) {
+        return studentRepository.findById(id)
+                .map(student -> parentGuardianRepository.findByStudentId(id).stream()
+                        .map(parentGuardianMapper::toDto)
+                        .collect(Collectors.toList()))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/students/{id}/parents")
+    public ResponseEntity<Void> patchParents(@PathVariable Long id,
+                                             @RequestBody List<ParentGuardianDto> list) {
+        Optional<Student> studentOpt = studentRepository.findById(id);
+        if (studentOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Student student = studentOpt.get();
+        for (ParentGuardianDto dto : list) {
+            ParentGuardian entity = parentGuardianRepository
+                    .findByStudentIdAndRole(id, dto.role())
+                    .orElse(new ParentGuardian());
+            entity.setStudent(student);
+            entity.setRole(dto.role());
+            entity.setFirstName(dto.firstName());
+            entity.setLastName(dto.lastName());
+            entity.setMiddleName(dto.middleName());
+            entity.setOccupation(dto.occupation());
+            entity.setContactNum(dto.contactNum());
+            entity.setEmail(dto.email());
+            entity.setHighestEducationalAttainment(dto.highestEducationalAttainment());
+            parentGuardianRepository.save(entity);
         }
         return ResponseEntity.noContent().build();
     }

@@ -26,10 +26,12 @@ class StudentControllerTest {
     private AddressRepository addressRepository;
     private RequirementTypeRepository requirementTypeRepository;
     private RequirementRepository requirementRepository;
+    private ParentGuardianRepository parentGuardianRepository;
     private StudentMapper studentMapper;
     private AddressMapper addressMapper;
     private RequirementTypeMapper requirementTypeMapper;
     private RequirementMapper requirementMapper;
+    private ParentGuardianMapper parentGuardianMapper;
     private StudentController controller;
 
     @BeforeEach
@@ -38,19 +40,23 @@ class StudentControllerTest {
         addressRepository = mock(AddressRepository.class);
         requirementTypeRepository = mock(RequirementTypeRepository.class);
         requirementRepository = mock(RequirementRepository.class);
+        parentGuardianRepository = mock(ParentGuardianRepository.class);
         studentMapper = Mappers.getMapper(StudentMapper.class);
         addressMapper = Mappers.getMapper(AddressMapper.class);
         requirementTypeMapper = Mappers.getMapper(RequirementTypeMapper.class);
         requirementMapper = Mappers.getMapper(RequirementMapper.class);
+        parentGuardianMapper = Mappers.getMapper(ParentGuardianMapper.class);
         controller = new StudentController(
                 studentRepository,
                 addressRepository,
                 requirementTypeRepository,
                 requirementRepository,
+                parentGuardianRepository,
                 studentMapper,
                 addressMapper,
                 requirementTypeMapper,
-                requirementMapper);
+                requirementMapper,
+                parentGuardianMapper);
     }
 
     @Test
