@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ph.edu.cspb.registrar.api.StudentController;
 import ph.edu.cspb.registrar.dto.StudentDto;
+import ph.edu.cspb.registrar.dto.StudentCreateDto;
 import ph.edu.cspb.registrar.mapper.*;
 import ph.edu.cspb.registrar.model.Student;
 import ph.edu.cspb.registrar.repo.*;
@@ -67,9 +68,24 @@ class StudentControllerTest {
             return s;
         });
 
-        StudentDto dto = new StudentDto(null, "123456789012", "Doe", "John", null, null,
-                LocalDate.of(2000,1,1), null, null, "Filipino", null,
-                (short)0, null, null, null, null);
+        StudentCreateDto dto = new StudentCreateDto(
+                "123456789012",
+                "Doe",
+                "John",
+                null,
+                null,
+                LocalDate.of(2000,1,1),
+                null,
+                null,
+                "Filipino",
+                null,
+                (short)0,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
 
         ResponseEntity<List<StudentDto>> response = controller.createStudents(List.of(dto));
 

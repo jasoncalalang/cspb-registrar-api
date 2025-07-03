@@ -74,12 +74,54 @@ public class StudentController {
 
     @PostMapping("/students")
     public ResponseEntity<List<StudentDto>> createStudents(
-            @Valid @RequestBody @Size(min = 1) List<StudentDto> dtos) {
-        List<StudentDto> saved = dtos.stream()
-                .map(studentMapper::toEntity)
-                .map(studentRepository::save)
-                .map(studentMapper::toDto)
-                .collect(Collectors.toList());
+            @Valid @RequestBody @Size(min = 1) List<StudentCreateDto> dtos) {
+        List<StudentDto> saved = dtos.stream().map(dto -> {
+            Student entity = studentMapper.toEntity(new StudentDto(
+                    null,
+                    dto.lrn(),
+                    dto.lastName(),
+                    dto.firstName(),
+                    dto.middleName(),
+                    dto.extensionName(),
+                    dto.birthDate(),
+                    dto.birthPlace(),
+                    dto.gender(),
+                    dto.nationality(),
+                    dto.religion(),
+                    dto.numSiblings(),
+                    dto.siblingNames(),
+                    dto.imgPath(),
+                    null,
+                    null
+            ));
+
+            if (dto.address() != null) {
+                Address addr = addressMapper.toEntity(dto.address());
+                addr.setStudent(entity);
+                entity.setAddress(addr);
+            }
+
+            if (dto.requirements() != null) {
+                for (RequirementDto rDto : dto.requirements()) {
+                    Requirement req = requirementMapper.toEntity(rDto);
+                    req.setStudent(entity);
+                    requirementTypeRepository.findById(rDto.requirementTypeId())
+                            .ifPresent(req::setRequirementType);
+                    entity.getRequirements().add(req);
+                }
+            }
+
+            if (dto.parents() != null) {
+                for (ParentGuardianDto pDto : dto.parents()) {
+                    ParentGuardian pg = parentGuardianMapper.toEntity(pDto);
+                    pg.setStudent(entity);
+                    entity.getParents().add(pg);
+                }
+            }
+
+            Student savedEntity = studentRepository.save(entity);
+            return studentMapper.toDto(savedEntity);
+        }).collect(Collectors.toList());
         return ResponseEntity.ok(saved);
     }
 
