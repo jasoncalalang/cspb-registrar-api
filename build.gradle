@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '3.3.0'      // or the exact version you generated
     id 'io.spring.dependency-management' version '1.1.5'
     id 'java'
+    id 'org.flywaydb.flyway' version '10.10.0'
 }
 
 group = 'ph.edu.cspb.registrar'
