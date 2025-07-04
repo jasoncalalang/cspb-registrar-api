@@ -53,14 +53,14 @@ jobs:
       - name: Configure cluster
         run: ibmcloud ks cluster config -c d1e1256t0a9klfmaes1g
 
-      - name: Deploy to Kubernetes
-        env:
-          INGRESS_HOST: ${{ vars.INGRESS_HOST }}
-          TLS_HOST: ${{ vars.TLS_HOST }}
-          TLS_SECRET: ${{ vars.TLS_SECRET }}
-        run: |
-          helm upgrade --install registrar ./kube \
-            --set ingress.host=$INGRESS_HOST \
-            --set ingress.tls.hosts[0]=$TLS_HOST \
-            --set ingress.tls.secretName=$TLS_SECRET \
-            -n ${{ vars.HELM_NAMESPACE }}
+      # - name: Deploy to Kubernetes
+      #   env:
+      #     INGRESS_HOST: ${{ vars.INGRESS_HOST }}
+      #     TLS_HOST: ${{ vars.TLS_HOST }}
+      #     TLS_SECRET: ${{ vars.TLS_SECRET }}
+      #   run: |
+      #     helm upgrade --install registrar ./kube \
+      #       --set ingress.host=$INGRESS_HOST \
+      #       --set ingress.tls.hosts[0]=$TLS_HOST \
+      #       --set ingress.tls.secretName=$TLS_SECRET \
+      #       -n ${{ vars.HELM_NAMESPACE }}
