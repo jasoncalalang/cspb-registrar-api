@@ -18,6 +18,7 @@ This project is a Spring Boot application providing a simple registrar API. The 
 | PUT    | `/api/students/{id}`                  | Replace a student record  |
 | PATCH  | `/api/students/{id}`                  | Partially update a student |
 | DELETE | `/api/students/{id}`                  | Delete a student          |
+| POST   | `/api/students/{id}/scan`             | Record an attendance scan |
 | GET    | `/api/students/{id}/address`          | Retrieve a student's address |
 | PUT    | `/api/students/{id}/address`          | Replace a student's address |
 | DELETE | `/api/students/{id}/address`          | Delete a student's address |
@@ -28,6 +29,43 @@ This project is a Spring Boot application providing a simple registrar API. The 
 | GET    | `/health` or `/api/health`            | Health check              |
 
 See `docs/swagger.yaml` for detailed request and response structures.
+
+### Example: creating a student
+
+```json
+[
+  {
+    "lrn": "123456789012",
+    "lastName": "Doe",
+    "firstName": "John",
+    "birthDate": "2000-01-01",
+    "birthPlace": "Manila",
+    "gender": "M",
+    "nationality": "Filipino",
+    "religion": "Catholic",
+    "address": {
+      "houseNo": "123",
+      "streetSubd": "Main St",
+      "bgyCode": "B001"
+    },
+    "requirements": [
+      {
+        "requirementTypeId": 1,
+        "submitted": true,
+        "submittedDate": "2024-01-05"
+      }
+    ],
+    "parents": [
+      {
+        "role": "father",
+        "firstName": "John",
+        "lastName": "Doe",
+        "contactNum": "09171234567"
+      }
+    ]
+  }
+]
+```
 
 ## Running Locally
 

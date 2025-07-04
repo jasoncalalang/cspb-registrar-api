@@ -32,6 +32,28 @@ paths:
               minItems: 1
               items:
                 $ref: '#/components/schemas/StudentCreate'
+            example:
+              - lrn: "123456789012"
+                lastName: Doe
+                firstName: John
+                birthDate: "2000-01-01"
+                birthPlace: Manila
+                gender: M
+                nationality: Filipino
+                religion: Catholic
+                address:
+                  houseNo: "123"
+                  streetSubd: "Main St"
+                  bgyCode: B001
+                requirements:
+                  - requirementTypeId: 1
+                    submitted: true
+                    submittedDate: "2024-01-05"
+                parents:
+                  - role: father
+                    firstName: John
+                    lastName: Doe
+                    contactNum: "09171234567"
       responses:
         '200':
           description: Created
@@ -304,6 +326,31 @@ paths:
           description: No content
         '404':
           description: Not found
+  /api/students/{id}/scan:
+    post:
+      summary: Scan student for attendance
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanResult'
+        '400':
+          description: Invalid scan within 5 minute window
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanResult'
+        '404':
+          description: Not found
   /health:
     get:
       summary: Health check
@@ -439,6 +486,28 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ParentGuardian'
+      example:
+        lrn: "123456789012"
+        lastName: Doe
+        firstName: John
+        birthDate: "2000-01-01"
+        birthPlace: Manila
+        gender: M
+        nationality: Filipino
+        religion: Catholic
+        address:
+          houseNo: "123"
+          streetSubd: "Main St"
+          bgyCode: B001
+        requirements:
+          - requirementTypeId: 1
+            submitted: true
+            submittedDate: "2024-01-05"
+        parents:
+          - role: father
+            firstName: John
+            lastName: Doe
+            contactNum: "09171234567"
     Address:
       type: object
       properties:
@@ -524,4 +593,14 @@ components:
         message:
           type: string
           example: OK
+    ScanResult:
+      type: object
+      properties:
+        message:
+          type: string
+          example: successful
+        dateTime:
+          type: string
+          format: date-time
+          example: "2024-01-01T12:00:00Z"
 
