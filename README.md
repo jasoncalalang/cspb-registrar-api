@@ -46,7 +46,7 @@ See `docs/swagger.yaml` for detailed request and response structures.
     "address": {
       "houseNo": "123",
       "streetSubd": "Main St",
-      "bgyCode": "B001"
+      "bgyCode": "B1"
     },
     "requirements": [
       {

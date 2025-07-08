@@ -44,7 +44,7 @@ paths:
                 address:
                   houseNo: "123"
                   streetSubd: "Main St"
-                  bgyCode: B001
+                    bgyCode: B1
                 requirements:
                   - requirementTypeId: 1
                     submitted: true
@@ -498,7 +498,7 @@ components:
         address:
           houseNo: "123"
           streetSubd: "Main St"
-          bgyCode: B001
+          bgyCode: B1
         requirements:
           - requirementTypeId: 1
             submitted: true
@@ -522,7 +522,7 @@ components:
         bgyCode:
           type: string
           description: Barangay code
-          example: B001
+          example: B1
     Requirement:
       type: object
       properties:
